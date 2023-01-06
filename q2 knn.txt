@@ -1,0 +1,33 @@
+knn
+
+import  pandas as pd
+dataset=pd.read_csv("E:\diabetes.csv")
+
+x=dataset[ ["Pregnancies",	"Glucose",	"BloodPressure",	"SkinThickness",	"Insulin",	"BMI",	"DiabetesPedigreeFunction",	"Age"] ].values
+y=dataset.iloc[:,-1].values
+
+
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.20)
+
+from sklearn.neighbors import KNeighborsClassifier
+classifier=KNeighborsClassifier(n_neighbors=5)
+classifier.fit(x_train,y_train)
+
+prd=classifier.predict(x_test)
+
+from sklearn.metrics import classification_report,accuracy_score
+print("classification report: ",classification_report(prd,y_test))
+print("accuracy score :",accuracy_score(prd,y_test))
+  
+output
+classification report:                precision    recall  f1-score   support
+
+           0       0.81      0.77      0.79       107
+           1       0.53      0.60      0.56        47
+
+    accuracy                           0.71       154
+   macro avg       0.67      0.68      0.67       154
+weighted avg       0.73      0.71      0.72       154
+
+accuracy score : 0.7142857142857143
